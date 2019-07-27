@@ -1,0 +1,90 @@
+spring:
+  resources:
+    add-mappings: true
+    cache:
+      period: 3600
+    static-locations: classpath:/static/
+    chain:
+      cache: true
+      enabled: true
+      html-application-cache: true
+  rabbitmq:
+    host: 192.168.255.128
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 10
+        prefetch: 1
+        auto-startup: true
+        default-requeue-rejected: true
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000
+        max-attempts: 3
+        max-interval: 10000
+        multiplier: 1.0
+
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/seckill?serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    schema:
+#      - classpath:activity.sql
+    initialization-mode: always
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    initialSize: 100
+    minIdle: 500
+    maxActive: 1000
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+#   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+#   thymeleaf配置前后缀
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+#热部署
+  debug: true
+  spring:
+    devtools:
+      restart:
+        enabled: true  #设置开启热部署
+        exclude: classpath:/templates/
+    freemarker:
+      cache: false    #页面不加载缓存，修改即时生效
+
+#jedis配置
+
+redis:
+  host: 192.168.255.128
+  port: 6379
+  timeout: 10
+#  password: 123456
+  poolMaxTotal: 1000
+  poolMaxIdle: 500
+  poolMaxWait: 500
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+
+

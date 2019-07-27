@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery_v2.1.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="jumbotron">
+    <div class="container">
+        <h1 th:text="${goods.goodsTitle}"></h1>
+        <p th:text="${goods.goodsDetail}"></p>
+        <div class="row">
+            <div class="col-lg-4">
+                <h3>
+                    <span class="label label-primary"
+                          th:text="'秒杀开始时间:'+${#dates.format(goods.startDate,'yyyy-MM-dd HH:mm:ss')}">秒杀开始时间</span><br><br>
+                    <span class="label label-primary"
+                          th:text="'秒杀结束时间:'+${#dates.format(goods.endDate,'yyyy-MM-dd HH:mm:ss')}">秒杀结束时间</span>
+                </h3>
+            </div>
+            <div class="col-lg-7">
+                <img width="200px" height="200px" th:src="@{/img/iPhoneXr.jpg}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div id="statusDiv">
+                    <div class="alert alert-warning" role="alert" th:if="${activityStatus eq 0}">
+                        秒杀还没开始,还差<span id="remainTimeSpan" th:text="${remainTime}"></span>
+                    </div>
+                    <div class="alert alert-info" role="alert" th:if="${activityStatus eq 1}">秒杀已经开始</div>
+                    <div class="alert alert-warning" role="alert" th:if="${activityStatus eq 2}">秒杀已经结束</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <p>
+                    <form action="/do_kill" method="post">
+                        <input name="goodsId" id="goodsId" th:value="${goods.id}" hidden="hidden">
+                        <button type="submit" class="btn btn-primarsecKillBtny btn-lg" role="button" id="secKillBtn">秒杀</button>
+                    </form>
+                </p>
+            </div>
+            </tr>
+            <input id="remainTime" type="hidden" th:value="${remainTime}"/>
+
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/js/good_detail.js}"></script>
+</body>
+</html>

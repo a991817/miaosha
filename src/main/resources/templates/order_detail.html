@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery_v2.1.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 th:text="${goods.goodsTitle}"></h1>
+            <p th:text="${goods.goodsDetail}"></p>
+            <div class="row">
+                    <div class="col-lg-3">
+                        <div class="alert alert-success" role="alert" th:text="'用户s:'+${order.userId}"></div>
+                        <div class="alert alert-success" role="alert" th:text="'商品名称:'+${goods.goodsName}"></div>
+                        <div class="alert alert-success" role="alert" th:text="'价格:'+${order.goodsPrice}+'元'"></div>
+                        <div class="alert alert-success" role="alert" th:text="'数量:'+${order.goodsCount}+'个'"></div>
+                        <div class="alert alert-success" role="alert" th:text="'下单时间:'+${#dates.format(order.createDate,'yyyy-MM-dd HH:mm:ss')}"></div>
+                        <div id="statusDiv" class="alert alert-success" role="alert"></div>
+                        <input id="orderStatus" th:value="${order.status}" hidden="hidden">
+                    </div>
+                    <div class="col-lg-7">
+                        <img width="200px" height="200px" th:src="@{${goods.goodsImg}}"/>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var status = $("#orderStatus").val();
+            var statusText = "下单状态：";
+            if(status==0) {
+                statusText += "新建未支付"
+            }else if(status==1){
+                statusText+="已支付"
+            }else if(status==2){
+                statusText+="已发货"
+            }else if(status==3){
+                statusText+="已收货"
+            }else if(status==4){
+                statusText+="已退款"
+            }else if(status==5){
+                statusText+="已完成"
+            }
+            $("#statusDiv").text(statusText)
+        })
+    </script>
+</body>
+</html>

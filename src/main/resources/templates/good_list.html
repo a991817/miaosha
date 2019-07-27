@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery_v2.1.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#" th:text="${user.nickname}">
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <table class="table table-hover text-center" style="margin-top: 80px;">
+            <thead>
+            <tr>
+                <td>商品名称</td>
+                <td>商品图片</td>
+                <td>商品原价</td>
+                <td>商品秒杀价</td>
+                <td>库存数量</td>
+                <td>详情</td>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr th:each="goods,goodsStatus:${goodsList}">
+                <td th:text="${goods.goodsName}"></td>
+                <td><img th:src="@{${goods.goodsImg}}" style="width: 100px;height: 100px;"></td>
+                <td th:text="${goods.goodsPrice}"></td>
+                <td th:text="${goods.seckillPrice}"></td>
+                <td th:text="${goods.stockCount}"></td>
+                <td><a th:href="'/good_detail.htm?goodsId='+${goods.id}">详情</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
